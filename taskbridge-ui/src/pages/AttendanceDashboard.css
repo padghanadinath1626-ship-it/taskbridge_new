@@ -1,0 +1,205 @@
+.attendance-dashboard-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.attendance-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.attendance-header h1 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.attendance-header .subtitle {
+    color: #666;
+    font-size: 1rem;
+}
+
+.filter-section {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.filter-group input,
+.filter-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.filter-group input:disabled,
+.filter-group select:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card .stat-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-label {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.table-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table-section h3 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table-responsive table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-responsive table thead {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table-responsive table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #495057;
+}
+
+.table-responsive table td {
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table-responsive table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.present {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.absent {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.status-badge.on_leave {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.message {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@media (max-width: 768px) {
+    .filter-section {
+        flex-direction: column;
+    }
+
+    .filter-group {
+        flex: 1 1 100%;
+    }
+
+    .stats-section {
+        grid-template-columns: 1fr;
+    }
+
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+
+    .table-responsive table th,
+    .table-responsive table td {
+        padding: 0.75rem;
+    }
+}

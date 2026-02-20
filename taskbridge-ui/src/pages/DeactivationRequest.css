@@ -1,0 +1,37 @@
+.deactivation-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 2rem;
+  background: #f7fafc;
+}
+
+.deactivation-page .card {
+  width: 100%;
+  max-width: 720px;
+  background: white;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.deactivation-page h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  color: #111827;
+}
+
+.deactivation-page p { color: #6b7280; margin-bottom: 1rem; }
+
+.request-form label { display:block; margin-top: 1rem; margin-bottom: 0.5rem; color:#374151; font-weight:600 }
+.request-form select,
+.request-form textarea { width:100%; padding:0.75rem; border:1px solid #e5e7eb; border-radius:6px; font-size:0.95rem }
+.request-form button { margin-top:1rem; padding:0.75rem 1.25rem; background:#2563eb; color:white; border:none; border-radius:6px; cursor:pointer }
+.request-form .message { margin-top:1rem; padding:0.75rem; border-radius:6px }
+.message.success { background:#ecfdf5; color:#065f46 }
+.message.error { background:#fef2f2; color:#7f1d1d }
+
+@media (max-width:600px) {
+  .deactivation-page .card { padding:1rem }
+}
