@@ -55,6 +55,11 @@ export const Header = () => {
                   <Link to="/attendance" className="nav-link">Attendance</Link>
                 </>
               )}
+              {user?.role === 'HR' && (
+                <>
+                  <Link to="/hr-dashboard" className="nav-link">HR Dashboard</Link>
+                </>
+              )}
               {user?.role === 'MANAGER' && (
                 <>
                   <Link to="/" className="nav-link">Dashboard</Link>

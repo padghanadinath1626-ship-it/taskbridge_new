@@ -8,6 +8,7 @@ import { AdminPanel } from './pages/AdminPanel';
 import { ProfilePage } from './pages/ProfilePage';
 import { AttendanceDashboard } from './pages/AttendanceDashboard';
 import { AttendanceCalendar } from './components/AttendanceCalendar';
+import { HRDashboard } from './pages/HRDashboard';
 import { DeactivationRequestPage } from './pages/DeactivationRequestPage';
 import { useAuth } from './auth/useAuth';
 import './App.css';
@@ -88,6 +89,14 @@ function AppRoutes() {
             element={
               <ProtectedRoute allowedRoles={["ADMIN","MANAGER"]}>
                 <AttendanceDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/hr-dashboard"
+            element={
+              <ProtectedRoute allowedRoles={["HR"]}>
+                <HRDashboard />
               </ProtectedRoute>
             }
           />

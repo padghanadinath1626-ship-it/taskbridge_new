@@ -29,6 +29,8 @@ export const LoginPage = () => {
 
       // Redirect based on role
       if (user.role === 'ADMIN') navigate('/admin');
+      else if (user.role === 'HR') navigate('/hr-dashboard');
+      else if (user.role === 'MANAGER') navigate('/attendance');
       else navigate('/');
     } catch (err) {
       setLocalError('Invalid email or password');

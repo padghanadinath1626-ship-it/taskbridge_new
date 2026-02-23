@@ -1,0 +1,143 @@
+.hr-dashboard {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  border-radius: 12px;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: rgb(21, 15, 15);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+}
+
+.dashboard-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.header-subtitle {
+  color: rgba(36, 32, 32, 0.95);
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.tabs-container {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-bottom: 3px solid #2196F3;
+  color:#160c0c;
+}
+
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #160c0c;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.tab-button:hover {
+  color: #2196F3;
+  background: rgba(33, 150, 243, 0.1);
+  border-color: rgba(33, 150, 243, 0.3);
+}
+
+.tab-button.active {
+  color: rgb(14, 11, 11);
+  background: #2196F3;
+  border-color: #2196F3;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.tab-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1000px) {
+  .dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hr-dashboard {
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tabs-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tab-button {
+    width: 100%;
+    text-align: center;
+    padding: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hr-dashboard {
+    padding: 0.75rem;
+    background: white;
+  }
+
+  .dashboard-header {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .tab-button {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+}
