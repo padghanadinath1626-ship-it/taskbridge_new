@@ -4,19 +4,23 @@
     margin: 0 auto;
 }
 
+.profile-content > * {
+    animation: fadeIn 0.45s ease;
+}
+
 .profile-header {
     margin-bottom: 2rem;
     text-align: center;
 }
 
 .profile-header h1 {
-    color: #333;
+    color: var(--text);
     margin-bottom: 0.5rem;
     font-size: 2rem;
 }
 
 .profile-header .subtitle {
-    color: #666;
+    color: var(--text-muted);
     font-size: 1rem;
 }
 
@@ -26,14 +30,21 @@
 }
 
 .profile-card {
-    background: white;
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.92), rgba(15, 23, 42, 0.88));
     border-radius: 12px;
     padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-strong);
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 2rem;
     align-items: start;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
 }
 
 .profile-avatar {
@@ -56,7 +67,7 @@
 
 .profile-info h2 {
     font-size: 1.8rem;
-    color: #333;
+    color: var(--text);
     margin-bottom: 0.5rem;
 }
 
@@ -85,26 +96,27 @@
 
 .detail-item label {
     font-weight: 600;
-    color: #666;
+    color: var(--text-muted);
     font-size: 0.9rem;
     margin-bottom: 0.3rem;
     text-transform: uppercase;
 }
 
 .detail-item p {
-    color: #333;
+    color: var(--text);
     font-size: 1rem;
 }
 
 .quick-stats {
-    background: white;
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.92), rgba(15, 23, 42, 0.88));
     border-radius: 12px;
     padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-strong);
 }
 
 .quick-stats h3 {
-    color: #333;
+    color: var(--text);
     margin-bottom: 1.5rem;
     font-size: 1.3rem;
 }
@@ -119,9 +131,15 @@
     display: flex;
     gap: 1rem;
     padding: 1.5rem;
-    background: #f8f9fa;
+    background: rgba(51, 65, 85, 0.34);
     border-radius: 8px;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid var(--primary);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 20px rgba(2, 6, 23, 0.2);
 }
 
 .stat-icon {
@@ -133,27 +151,28 @@
 }
 
 .stat-label {
-    color: #666;
+    color: var(--text-muted);
     font-size: 0.9rem;
     margin: 0;
 }
 
 .stat-value {
-    color: #333;
+    color: var(--text);
     font-size: 1.3rem;
     font-weight: 600;
     margin: 0;
 }
 
 .role-permissions {
-    background: white;
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.92), rgba(15, 23, 42, 0.88));
     border-radius: 12px;
     padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-strong);
 }
 
 .role-permissions h3 {
-    color: #333;
+    color: var(--text);
     margin-bottom: 1.5rem;
     font-size: 1.3rem;
 }
@@ -166,21 +185,22 @@
 
 .permission-item {
     padding: 0.75rem 1rem;
-    background: #d4edda;
-    color: #155724;
+    background: rgba(16, 185, 129, 0.16);
+    color: #86efac;
     border-radius: 6px;
     font-weight: 500;
 }
 
 .contact-info {
-    background: white;
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.92), rgba(15, 23, 42, 0.88));
     border-radius: 12px;
     padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-strong);
 }
 
 .contact-info h3 {
-    color: #333;
+    color: var(--text);
     margin-bottom: 1.5rem;
     font-size: 1.3rem;
 }
@@ -202,14 +222,14 @@
 }
 
 .contact-item .label {
-    color: #666;
+    color: var(--text-muted);
     font-size: 0.9rem;
     margin: 0;
     font-weight: 600;
 }
 
 .contact-item .value {
-    color: #333;
+    color: var(--text);
     font-size: 1rem;
     margin: 0.25rem 0 0 0;
 }
@@ -244,5 +264,46 @@
 
     .profile-container {
         padding: 1rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .profile-container {
+        padding: 0.55rem;
+    }
+
+    .profile-header h1 {
+        font-size: 1.1rem;
+    }
+
+    .profile-header .subtitle {
+        font-size: 0.78rem;
+    }
+
+    .profile-card,
+    .quick-stats,
+    .role-permissions,
+    .contact-info {
+        padding: 0.75rem;
+        border-radius: 10px;
+    }
+
+    .avatar-circle {
+        width: 90px;
+        height: 90px;
+        font-size: 2rem;
+    }
+
+    .profile-info h2 {
+        font-size: 1.1rem;
+    }
+
+    .detail-item label,
+    .detail-item p,
+    .stat-label,
+    .stat-value,
+    .contact-item .label,
+    .contact-item .value {
+        font-size: 0.78rem;
     }
 }

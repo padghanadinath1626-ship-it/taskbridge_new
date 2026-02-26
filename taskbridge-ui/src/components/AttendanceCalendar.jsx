@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import AttendanceService from '../api/AttendanceService';
+import HRService from '../api/HRService';
+import LeaveService from '../api/LeaveService';
 import '../styles/AttendanceCalendar.css';
 
 export const AttendanceCalendar = ({ userId = null }) => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [attendanceData, setAttendanceData] = useState([]);
+    const [leaveData, setLeaveData] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -27,6 +30,38 @@ export const AttendanceCalendar = ({ userId = null }) => {
             }
 
             setAttendanceData(Array.isArray(records) ? records : []);
+
+            // Fetch approved leaves for the current calendar context
+            try {
+                let approvedLeaves = [];
+
+                if (userId) {
+                    const userLeavesResp = await HRService.getEmployeeLeaves(userId);
+                    approvedLeaves = (userLeavesResp.data || []).filter(l => {
+                        if (l.status !== 'APPROVED') return false;
+                        const leaveStart = new Date(l.startDate);
+                        const leaveEnd = new Date(l.endDate);
+                        const rangeStart = new Date(startDate);
+                        const rangeEnd = new Date(endDate);
+                        return leaveStart <= rangeEnd && leaveEnd >= rangeStart;
+                    });
+                } else {
+                    const myLeavesResp = await LeaveService.getMyLeaves();
+                    approvedLeaves = (myLeavesResp.data || []).filter(l => {
+                        if (l.status !== 'APPROVED') return false;
+                        const leaveStart = new Date(l.startDate);
+                        const leaveEnd = new Date(l.endDate);
+                        const rangeStart = new Date(startDate);
+                        const rangeEnd = new Date(endDate);
+                        return leaveStart <= rangeEnd && leaveEnd >= rangeStart;
+                    });
+                }
+
+                setLeaveData(approvedLeaves);
+            } catch (err) {
+                console.warn('Failed to fetch leaves:', err);
+                setLeaveData([]);
+            }
         } catch (error) {
             console.error('Failed to fetch attendance data:', error);
             setAttendanceData([]);
@@ -48,7 +83,18 @@ export const AttendanceCalendar = ({ userId = null }) => {
         return attendanceData.find(record => record.attendanceDate === dateString);
     };
 
-    const getStatusColor = (status) => {
+    const getLeaveForDate = (day) => {
+        const dateString = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        return leaveData.find(leave => {
+            const startDate = new Date(leave.startDate);
+            const endDate = new Date(leave.endDate);
+            const currentDateCheck = new Date(dateString);
+            return currentDateCheck >= startDate && currentDateCheck <= endDate;
+        });
+    };
+
+    const getStatusColor = (status, isLeave = false) => {
+        if (isLeave) return '#ffc107';
         const colors = {
             PRESENT: '#28a745',
             ABSENT: '#dc3545',
@@ -57,7 +103,8 @@ export const AttendanceCalendar = ({ userId = null }) => {
         return colors[status] || '#6c757d';
     };
 
-    const getStatusIcon = (status) => {
+    const getStatusIcon = (status, isLeave = false) => {
+        if (isLeave) return 'L';
         const icons = {
             PRESENT: '✓',
             ABSENT: '✗',
@@ -126,20 +173,26 @@ export const AttendanceCalendar = ({ userId = null }) => {
                         }
 
                         const attendance = getAttendanceForDate(day);
+                        const leave = getLeaveForDate(day);
                         const status = attendance?.status || 'ABSENT';
                         const hasClockIn = attendance?.clockInTime;
+                        const isOnApprovedLeave = !!leave;
 
                         return (
                             <div
                                 key={day}
                                 className={`day ${status.toLowerCase()} ${hasClockIn ? 'present' : ''}`}
                                 style={{
-                                    borderLeftColor: attendance ? getStatusColor(status) : '#ddd'
+                                    borderLeftColor: isOnApprovedLeave ? getStatusColor(status, true) : attendance ? getStatusColor(status) : '#ddd'
                                 }}
-                                title={attendance ? `${status}${hasClockIn ? ' - Clocked in' : ''}` : 'No data'}
+                                title={isOnApprovedLeave ? `${leave.leaveType} - Approved` : (attendance ? `${status}${hasClockIn ? ' - Clocked in' : ''}` : 'No data')}
                             >
                                 <div className="day-number">{day}</div>
-                                {attendance && (
+                                {isOnApprovedLeave ? (
+                                    <div className="day-status" style={{ color: getStatusColor(status, true), fontWeight: 'bold' }}>
+                                        {getStatusIcon(status, true)}
+                                    </div>
+                                ) : attendance && (
                                     <div className="day-status" style={{ color: getStatusColor(status) }}>
                                         {getStatusIcon(status)}
                                     </div>
@@ -161,7 +214,7 @@ export const AttendanceCalendar = ({ userId = null }) => {
                 </div>
                 <div className="legend-item">
                     <div className="legend-color on_leave"></div>
-                    <span>On Leave</span>
+                    <span>Approved Leave</span>
                 </div>
                 <div className="legend-item">
                     <div className="legend-color empty"></div>

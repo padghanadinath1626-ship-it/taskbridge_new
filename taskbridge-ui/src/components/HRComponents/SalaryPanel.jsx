@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import HRService from '../../api/HRService';
 import UserService from '../../api/UserService';
 import '../styles/HRComponents.css';
+import { jsPDF } from 'jspdf';
 
 const SalaryPanel = () => {
   const [employees, setEmployees] = useState([]);
@@ -72,6 +73,72 @@ const SalaryPanel = () => {
     }
   };
 
+  const handleGenerateAndSendSlip = async () => {
+    if (!selectedEmployee) {
+      setError('Please select employee');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const currentDate = new Date();
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth() + 1;
+
+      const resp = await HRService.getSalaryForMonth(selectedEmployee, year, month);
+      const record = resp.data;
+      if (!record) {
+        setError('No salary record found for selected month');
+        return;
+      }
+
+      const emp = employees.find(e => e.id === selectedEmployee) || {};
+      const subject = `Salary Slip - ${record.month}/${record.year}`;
+      const content = `Dear ${emp.name || 'Employee'},\n\nPlease find your salary details for ${record.month}/${record.year}:\n\nBase Salary: ₹${record.baseSalary.toFixed(2)}\nPresent Days: ${record.presentDays}\nAbsent Days: ${record.absentDays}\nLeave Days: ${record.leaveDays}\nEarned Salary: ₹${record.earnedSalary.toFixed(2)}\nDeductions: ₹${record.deductions.toFixed(2)}\nNet Salary: ₹${record.netSalary.toFixed(2)}\n\nRegards,\nHR Team`;
+
+      try {
+        await HRService.sendNotice(selectedEmployee, subject, content, 'SALARY');
+      } catch (notifyErr) {
+        console.warn('Failed to send salary notice', notifyErr);
+      }
+
+      // generate PDF for local download
+      try {
+        const doc = new jsPDF();
+        doc.setFontSize(14);
+        doc.text(`Salary Slip - ${record.month}/${record.year}`, 105, 20, { align: 'center' });
+        doc.setFontSize(11);
+        let y = 36;
+        doc.text(`Name: ${emp.name || ''}`, 20, y);
+        doc.text(`Email: ${emp.email || ''}`, 140, y);
+        y += 8;
+        doc.text(`Base Salary: ₹${record.baseSalary.toFixed(2)}`, 20, y);
+        y += 8;
+        doc.text(`Present Days: ${record.presentDays}`, 20, y);
+        doc.text(`Absent Days: ${record.absentDays}`, 100, y);
+        y += 8;
+        doc.text(`Leave Days: ${record.leaveDays}`, 20, y);
+        doc.text(`Earned Salary: ₹${record.earnedSalary.toFixed(2)}`, 100, y);
+        y += 8;
+        doc.text(`Deductions: ₹${record.deductions.toFixed(2)}`, 20, y);
+        doc.text(`Net Salary: ₹${record.netSalary.toFixed(2)}`, 100, y);
+        y += 16;
+        doc.text('This is a system generated salary slip.', 20, y);
+        const filename = `salary_slip_${record.month}_${record.year}.pdf`;
+        doc.save(filename);
+      } catch (pdfErr) {
+        console.warn('Failed to generate PDF', pdfErr);
+      }
+
+      setSuccessMessage('Salary slip generated and notice sent');
+      setTimeout(() => setSuccessMessage(null), 3500);
+    } catch (err) {
+      setError('Failed to generate/send salary slip');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="hr-panel">
       <h2>Salary Management</h2>
@@ -104,6 +171,15 @@ const SalaryPanel = () => {
           className="btn-primary"
         >
           {loading ? 'Calculating...' : 'Calculate Salary'}
+        </button>
+
+        <button
+          onClick={handleGenerateAndSendSlip}
+          disabled={loading}
+          className="btn-secondary"
+          style={{ marginLeft: '8px' }}
+        >
+          {loading ? 'Processing...' : 'Generate & Send Salary Slip'}
         </button>
 
         <button 

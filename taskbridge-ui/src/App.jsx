@@ -103,7 +103,7 @@ function AppRoutes() {
           <Route
             path="/calendar"
             element={
-              <ProtectedRoute allowedRoles={["EMPLOYEE"]}>
+              <ProtectedRoute allowedRoles={["EMPLOYEE", "HR"]}>
                 <div style={{ padding: '2rem' }}>
                   <h1>My Attendance Calendar</h1>
                   <AttendanceCalendar />

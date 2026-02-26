@@ -58,6 +58,7 @@ export const Header = () => {
               {user?.role === 'HR' && (
                 <>
                   <Link to="/hr-dashboard" className="nav-link">HR Dashboard</Link>
+                  <Link to="/calendar" className="nav-link">Calendar</Link>
                 </>
               )}
               {user?.role === 'MANAGER' && (

@@ -5,6 +5,7 @@ import { useAuth } from '../auth/useAuth';
 import { TaskPanel } from '../components/TaskPanel';
 import { SendMessageModal } from '../components/SendMessageModal';
 import { AttendanceTracker } from '../components/AttendanceTracker';
+import LeaveRequest from '../components/LeaveRequest';
 import './Dashboard.css';
 
 export const Dashboard = () => {
@@ -178,6 +179,9 @@ export const Dashboard = () => {
 
             {/* ATTENDANCE TRACKER (EMPLOYEE & MANAGER) */}
             {(user.role === 'EMPLOYEE' || user.role === 'MANAGER') && <AttendanceTracker />}
+
+            {/* LEAVE REQUEST (EMPLOYEE & MANAGER) */}
+            {(user.role === 'EMPLOYEE' || user.role === 'MANAGER') && <LeaveRequest />}
 
             {/* CREATE TASK (MANAGER) */}
             {user.role === 'MANAGER' && (

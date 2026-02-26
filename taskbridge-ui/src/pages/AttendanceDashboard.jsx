@@ -32,18 +32,24 @@ export const AttendanceDashboard = () => {
         try {
             setLoading(true);
             let userList = [];
+            const getRole = (u) => String(u?.role || '').toUpperCase();
             
             if (user?.role === 'ADMIN') {
                 // Admin can see all users
                 const response = await AdminService.getAllUsers();
                 userList = Array.isArray(response) ? response : (response?.data || []);
-                // Filter to only active managers and employees
-                userList = userList.filter(u => u.active && (u.role === 'EMPLOYEE' || u.role === 'MANAGER'));
+                // Filter to only active managers, employees, and HR
+                userList = userList.filter(u => u.active && (getRole(u) === 'EMPLOYEE' || getRole(u) === 'MANAGER' || getRole(u) === 'HR'));
             } else if (user?.role === 'MANAGER') {
-                // Manager can only see employees; also include self
-                const response = await AdminService.getAllEmployees();
-                userList = Array.isArray(response) ? response : (response?.data || []);
-                userList = userList.filter(u => u.active);
+                // Manager can see employees and HR; also include self
+                try {
+                    const response = await AdminService.getAllUsers();
+                    userList = Array.isArray(response) ? response : (response?.data || []);
+                } catch {
+                    const response = await AdminService.getAllEmployees();
+                    userList = Array.isArray(response) ? response : (response?.data || []);
+                }
+                userList = userList.filter(u => u.active && (getRole(u) === 'EMPLOYEE' || getRole(u) === 'HR'));
                 // add manager self to list if not present
                 if (user && user.id) {
                     const exists = userList.some(u => Number(u.id) === Number(user.id));
@@ -150,7 +156,7 @@ export const AttendanceDashboard = () => {
 
             <div className="filter-section">
                 <div className="filter-group">
-                    <label>Select Employee/Manager:</label>
+                    <label>Select Employee/HR/Manager:</label>
                     <select 
                         value={selectedUserId} 
                         onChange={(e) => setSelectedUserId(e.target.value)}

@@ -236,7 +236,7 @@ export const AdminPanel = () => {
                                         </label>
                                     </div>
                                     <div className="table-responsive">
-                                    <table>
+                                    <table className="user-table">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -303,7 +303,7 @@ export const AdminPanel = () => {
 
                             {activeTab === 'tasks' && (
                                 <div className="table-responsive">
-                                    <table>
+                                    <table className="task-table">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>

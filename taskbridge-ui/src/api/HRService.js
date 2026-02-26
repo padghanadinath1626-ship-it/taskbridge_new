@@ -38,6 +38,11 @@ export default {
     }),
 
   // Leave Management
+  applyForLeave: (userId, startDate, endDate, leaveType, reason) =>
+    axiosInstance.post(`/hr/leaves/apply`, {
+      userId, startDate, endDate, leaveType, reason
+    }),
+
   getAllPendingLeaves: () =>
     axiosInstance.get(`/hr/leaves/pending`),
   
@@ -53,36 +58,17 @@ export default {
   rejectLeave: (leaveId, notes) =>
     axiosInstance.post(`/hr/leaves/${leaveId}/reject`, { notes }),
   
+  approveLeaveAndEmail: (leaveId, notes) =>
+    axiosInstance.post(`/hr/leaves/${leaveId}/approve-with-email`, { notes }),
+  
+  rejectLeaveAndEmail: (leaveId, notes) =>
+    axiosInstance.post(`/hr/leaves/${leaveId}/reject-with-email`, { notes }),
+  
   getLeavesInDateRange: (startDate, endDate) =>
-    axiosInstance.get(`/hr/leaves/range`, {
+    axiosInstance.get(`/leaves/range`, {
       params: { startDate, endDate }
     }),
-
-  // Salary Management
-  calculateSalary: (userId, year, month, baseSalary) =>
-    axiosInstance.post(`/hr/salary/calculate`, {
-      userId, year, month, baseSalary
-    }),
   
-  getEmployeeSalaryRecords: (userId) =>
-    axiosInstance.get(`/hr/salary/user/${userId}`),
-  
-  getSalaryForMonth: (userId, year, month) =>
-    axiosInstance.get(`/hr/salary/user/${userId}/month`, {
-      params: { year, month }
-    }),
-  
-  getAllSalariesForMonth: (year, month) =>
-    axiosInstance.get(`/hr/salary/month`, {
-      params: { year, month }
-    }),
-  
-  updateSalary: (salaryId, netSalary, notes) =>
-    axiosInstance.put(`/hr/salary/${salaryId}`, {
-      netSalary, notes
-    }),
-
-  // Roster Management
   createRosterEntry: (userId, shiftDate, shiftType, location, notes) =>
     axiosInstance.post(`/hr/roster`, {
       userId, shiftDate, shiftType, location, notes

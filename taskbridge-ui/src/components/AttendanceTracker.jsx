@@ -99,18 +99,20 @@ export const AttendanceTracker = () => {
                 <p><strong>Status:</strong> {clockedIn && !clockOutTime ? '🟢 Working' : clockOutTime ? '🔴 Off Duty' : '⚪ Not Clocked In'}</p>
             </div>
 
-            <div style={{ display: 'flex', gap: '1rem' }}>
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
                 <button 
                     onClick={handleClockIn}
                     disabled={clockedIn || loading}
                     style={{
-                        padding: '0.75rem 1.5rem',
+                        padding: '0.65rem 1rem',
                         backgroundColor: clockedIn ? '#ccc' : '#28a745',
                         color: 'white',
                         border: 'none',
                         borderRadius: '4px',
                         cursor: clockedIn ? 'not-allowed' : 'pointer',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        flex: '1 1 140px',
+                        minWidth: '120px'
                     }}
                 >
                     ▶ Clock In
@@ -120,13 +122,15 @@ export const AttendanceTracker = () => {
                     onClick={handleClockOut}
                     disabled={!clockedIn || clockOutTime || loading}
                     style={{
-                        padding: '0.75rem 1.5rem',
+                        padding: '0.65rem 1rem',
                         backgroundColor: !clockedIn || clockOutTime ? '#ccc' : '#dc3545',
                         color: 'white',
                         border: 'none',
                         borderRadius: '4px',
                         cursor: !clockedIn || clockOutTime ? 'not-allowed' : 'pointer',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        flex: '1 1 140px',
+                        minWidth: '120px'
                     }}
                 >
                     ⏹ Clock Out

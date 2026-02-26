@@ -1,9 +1,15 @@
 .hr-panel {
-  background: white;
-  border-radius: 8px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.94));
+  border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.12);
   margin-bottom: 2rem;
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+
+.hr-panel:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 30px rgba(2, 6, 23, 0.16);
 }
 
 .hr-panel h2 {
@@ -36,9 +42,9 @@
 .number-input {
   padding: 0.75rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 0.95rem;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 .select-input:focus,
@@ -76,12 +82,20 @@
 .btn-delete {
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 600;
   white-space: nowrap;
+}
+
+.btn-primary:hover:not(:disabled),
+.btn-secondary:hover:not(:disabled),
+.btn-approve:hover:not(:disabled),
+.btn-reject:hover:not(:disabled),
+.btn-delete:hover:not(:disabled) {
+  transform: translateY(-2px);
 }
 
 .btn-primary {
@@ -169,6 +183,8 @@ button:disabled {
 .salary-table {
   overflow-x: auto;
   margin-top: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #d8e0ee;
 }
 
 table {
@@ -195,7 +211,7 @@ table td {
 }
 
 table tbody tr:hover {
-  background: #f9f9f9;
+  background: #eef5ff;
 }
 
 /* Leave Cards */
@@ -361,6 +377,89 @@ table tbody tr:hover {
   padding: 1.5rem;
   border-radius: 4px;
   transition: all 0.3s ease;
+}
+
+@media (max-width: 480px) {
+  .hr-panel {
+    padding: 1rem;
+  }
+
+  .filter-section,
+  .form-group,
+  .action-buttons {
+    gap: 0.6rem;
+  }
+
+  .select-input,
+  .date-input,
+  .text-input,
+  .number-input,
+  .notes-input,
+  .content-textarea {
+    width: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+  .hr-panel {
+    padding: 0.75rem;
+    border-radius: 10px;
+  }
+
+  .hr-panel h2 {
+    font-size: 1rem;
+  }
+
+  .hr-panel h3 {
+    font-size: 0.86rem;
+  }
+
+  .select-input,
+  .date-input,
+  .text-input,
+  .number-input,
+  .notes-input,
+  .content-textarea {
+    padding: 0.52rem;
+    font-size: 0.78rem;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-approve,
+  .btn-reject,
+  .btn-delete {
+    width: 100%;
+    padding: 0.52rem 0.62rem;
+    font-size: 0.76rem;
+  }
+
+  table,
+  table tbody,
+  table tr,
+  table td {
+    display: block;
+    width: 100%;
+  }
+
+  table thead {
+    display: none;
+  }
+
+  table tr {
+    background: #f8fbff;
+    border: 1px solid #d8e0ee;
+    border-radius: 10px;
+    margin-bottom: 0.55rem;
+    padding: 0.4rem;
+  }
+
+  table td {
+    padding: 0.32rem 0.2rem;
+    border: none;
+    font-size: 0.72rem;
+    white-space: normal;
+  }
 }
 
 .notice-item:hover {

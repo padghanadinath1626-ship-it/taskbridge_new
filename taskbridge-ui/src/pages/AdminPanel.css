@@ -4,6 +4,10 @@
     gap: 2rem;
 }
 
+.admin-container > * {
+    animation: fadeIn 0.4s ease;
+}
+
 .admin-header {
     border-bottom: 2px solid var(--border);
     padding-bottom: 1rem;
@@ -107,8 +111,8 @@
 }
 
 .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: linear-gradient(165deg, rgba(30, 41, 59, 0.92), rgba(15, 23, 42, 0.88));
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius);
     padding: 1.5rem;
     display: flex;
@@ -119,9 +123,9 @@
 }
 
 .stat-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
     border-color: var(--primary);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--card-shadow-hover);
 }
 
 .stat-value {
@@ -142,8 +146,8 @@
 }
 
 .stats-full {
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: linear-gradient(165deg, rgba(30, 41, 59, 0.92), rgba(15, 23, 42, 0.88));
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius);
     padding: 2rem;
     box-shadow: var(--shadow);
@@ -343,14 +347,14 @@
 .table-responsive {
     overflow-x: auto;
     border-radius: var(--radius);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     box-shadow: var(--shadow);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    background: var(--surface);
+    background: rgba(15, 23, 42, 0.92);
     text-align: left;
 }
 
@@ -374,7 +378,157 @@ tr:last-child td {
 }
 
 tr:hover td {
-    background: var(--surface-hover);
+    background: rgba(51, 65, 85, 0.45);
+}
+
+@media (max-width: 900px) {
+    .role-legend {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 1rem;
+    }
+
+    th,
+    td {
+        padding: 0.75rem 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-container {
+        gap: 1rem;
+    }
+
+    .admin-header h1 {
+        font-size: 1.35rem;
+    }
+
+    .tabs button {
+        font-size: 0.82rem;
+        padding: 0.5rem 0.65rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+    }
+
+    .stat-value {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .admin-header h1 {
+        font-size: 1.1rem;
+    }
+
+    .subtitle {
+        font-size: 0.8rem;
+    }
+
+    .tabs {
+        gap: 0.3rem;
+        padding-bottom: 0.25rem;
+    }
+
+    .tabs button {
+        font-size: 0.72rem;
+        padding: 0.42rem 0.5rem;
+    }
+
+    .stat-card {
+        padding: 0.8rem;
+    }
+
+    .stat-value {
+        font-size: 1.45rem;
+    }
+
+    .stat-label,
+    .stat-meta {
+        font-size: 0.72rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .btn-promote,
+    .btn-delete,
+    .btn-activate,
+    .btn-send-message {
+        width: 100%;
+        font-size: 0.72rem;
+        padding: 0.45rem 0.5rem;
+    }
+
+    .table-responsive {
+        font-size: 0.73rem;
+        border: none;
+        box-shadow: none;
+        overflow: visible;
+    }
+
+    .user-table,
+    .task-table,
+    .user-table tbody,
+    .task-table tbody,
+    .user-table tr,
+    .task-table tr,
+    .user-table td,
+    .task-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .user-table thead,
+    .task-table thead {
+        display: none;
+    }
+
+    .user-table tr,
+    .task-table tr {
+        background: rgba(30, 41, 59, 0.9);
+        border: 1px solid var(--border-strong);
+        border-radius: 10px;
+        margin-bottom: 0.6rem;
+        padding: 0.42rem;
+    }
+
+    .user-table td,
+    .task-table td {
+        border: none;
+        padding: 0.32rem 0.35rem;
+        white-space: normal;
+        font-size: 0.72rem;
+    }
+
+    .user-table td::before,
+    .task-table td::before {
+        display: block;
+        font-size: 0.62rem;
+        color: var(--text-muted);
+        margin-bottom: 0.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+
+    .user-table td:nth-child(1)::before { content: "ID"; }
+    .user-table td:nth-child(2)::before { content: "Name"; }
+    .user-table td:nth-child(3)::before { content: "Email"; }
+    .user-table td:nth-child(4)::before { content: "Role"; }
+    .user-table td:nth-child(5)::before { content: "Status"; }
+    .user-table td:nth-child(6)::before { content: "Actions"; }
+
+    .task-table td:nth-child(1)::before { content: "ID"; }
+    .task-table td:nth-child(2)::before { content: "Title"; }
+    .task-table td:nth-child(3)::before { content: "Status"; }
+    .task-table td:nth-child(4)::before { content: "Priority"; }
+    .task-table td:nth-child(5)::before { content: "Creator"; }
+    .task-table td:nth-child(6)::before { content: "Manager"; }
+    .task-table td:nth-child(7)::before { content: "Deadline"; }
+    .task-table td:nth-child(8)::before { content: "Actions"; }
 }
 
 .role-badge {

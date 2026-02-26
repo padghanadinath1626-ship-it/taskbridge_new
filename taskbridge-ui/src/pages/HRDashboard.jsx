@@ -5,6 +5,8 @@ import LeavePanel from '../components/HRComponents/LeavePanel';
 import SalaryPanel from '../components/HRComponents/SalaryPanel';
 import RosterPanel from '../components/HRComponents/RosterPanel';
 import NoticePanel from '../components/HRComponents/NoticePanel';
+import NoticeHistory from '../components/HRComponents/NoticeHistory';
+import { AttendanceTracker } from '../components/AttendanceTracker';
 
 export const HRDashboard = () => {
   const [activeTab, setActiveTab] = useState('attendance');
@@ -21,6 +23,8 @@ export const HRDashboard = () => {
         return <RosterPanel />;
       case 'notices':
         return <NoticePanel />;
+      case 'notice-history':
+        return <NoticeHistory />;
       default:
         return <AttendancePanel />;
     }
@@ -29,6 +33,10 @@ export const HRDashboard = () => {
   return (
     <div className="hr-dashboard">
       <h1>HR Dashboard</h1>
+
+      <div className="hr-attendance-section">
+        <AttendanceTracker />
+      </div>
       
       <div className="tabs-container">
         <button 
@@ -60,6 +68,12 @@ export const HRDashboard = () => {
           onClick={() => setActiveTab('notices')}
         >
           📧 Notices
+        </button>
+        <button 
+          className={`tab-button ${activeTab === 'notice-history' ? 'active' : ''}`}
+          onClick={() => setActiveTab('notice-history')}
+        >
+          📜 Notice History
         </button>
       </div>
 

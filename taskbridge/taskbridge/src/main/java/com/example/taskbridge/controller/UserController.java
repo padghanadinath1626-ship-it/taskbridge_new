@@ -22,7 +22,10 @@ public class UserController {
     // Get all employees (accessible to authenticated users)
     @GetMapping("/employees")
     public ResponseEntity<List<User>> getAllEmployees() {
-        List<User> employees = userRepository.findByRole(RoleType.EMPLOYEE);
-        return ResponseEntity.ok(employees);
+        List<User> users = userRepository.findAll().stream()
+                .filter(User::isActive)
+                .filter(u -> u.getRole() == RoleType.EMPLOYEE || u.getRole() == RoleType.HR)
+                .toList();
+        return ResponseEntity.ok(users);
     }
 }
